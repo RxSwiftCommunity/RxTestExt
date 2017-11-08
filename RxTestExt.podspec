@@ -12,14 +12,19 @@ Pod::Spec.new do |s|
   s.license      = { :type => 'MIT', :file => 'LICENSE' }
   s.author       = { "mosamer" => "mostafamamer@gmail.com" }
   s.source       = { :git => 'https://github.com/mosamer/RxTestExt.git', :tag => s.version.to_s }
-
-  s.ios.deployment_target = "9.0"
+  s.ios.deployment_target = '9.0'
 
   s.default_subspec = 'Core'
   
   s.subspec 'Core' do |cs|
-    s.source_files = 'RxTestExt/Core/**/*'
+    cs.source_files = 'RxTestExt/Core/**/*'
+    cs.dependency 'RxTest', '~> 4.0.0'
   end
   
-  s.dependency 'RxTest', '~> 4.0.0'
+  s.subspec 'XCTest' do |cx| 
+	cx.source_files = 'RxTestExt/XCTest/**/*'
+	cx.dependency 'RxTestExt/Core'
+	cx.frameworks = 'XCTest'
+  end
+  
 end
