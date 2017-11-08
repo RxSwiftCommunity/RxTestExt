@@ -1,0 +1,7 @@
+included:
+  - Example
+  - ExampleTests
+  - ../RxTestExt
+disabled_rules: 
+  - identifier_name
+  - line_length

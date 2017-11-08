@@ -1,7 +1,6 @@
 import RxTest
 import Nimble
 
-
 /// A nimble matcher that succeeds when testable observer received one (or more) next events
 public func sendNext<T>() -> Predicate<TestableObserver<T>> {
     return Predicate { expression in

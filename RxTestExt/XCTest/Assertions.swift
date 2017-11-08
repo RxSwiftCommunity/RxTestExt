@@ -74,4 +74,3 @@ internal func verify(pass: Bool, message: String, file: StaticString, line: UInt
         XCTFail(message, file: file, line: line)
     }
 }
-
