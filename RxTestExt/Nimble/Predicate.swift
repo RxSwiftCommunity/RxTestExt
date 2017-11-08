@@ -8,8 +8,7 @@ public func sendNext<T>() -> Predicate<TestableObserver<T>> {
         guard let events = try expression.evaluate()?.events else {
             return PredicateResult(status: .fail, message: .fail("failed to evaluate expression"))
         }
-        let nextEvents = events.filter { $0.value.element != nil }
-        return PredicateResult(bool: !nextEvents.isEmpty,
+        return PredicateResult(bool: haveNext(events),
                                message: .expectedTo("receive next events"))
     }
 }
@@ -20,8 +19,7 @@ public func error<T>() -> Predicate<TestableObserver<T>> {
         guard let events = try expression.evaluate()?.events else {
             return PredicateResult(status: .fail, message: .fail("failed to evaluate expression"))
         }
-        let errorEvents = events.filter { $0.value.error != nil }
-        return PredicateResult(bool: !errorEvents.isEmpty,
+        return PredicateResult(bool: haveError(events),
                                message: .expectedTo("error"))
     }
 }
@@ -32,8 +30,7 @@ public func complete<T>() -> Predicate<TestableObserver<T>> {
         guard let events = try expression.evaluate()?.events else {
             return PredicateResult(status: .fail, message: .fail("failed to evaluate expression"))
         }
-        let completeEvents = events.filter { $0.value.isCompleted }
-        return PredicateResult(bool: !completeEvents.isEmpty,
+        return PredicateResult(bool: haveCompleted(events),
                                message: .expectedTo("complete"))
     }
 }
