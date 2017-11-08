@@ -16,6 +16,7 @@
 		CE3EF1451FB2FC2200B74D30 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CE3EF1431FB2FC2200B74D30 /* LaunchScreen.storyboard */; };
 		CE3EF1501FB2FC2200B74D30 /* ExampleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3EF14F1FB2FC2200B74D30 /* ExampleTests.swift */; };
 		CE3EF15C1FB3488C00B74D30 /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3EF15B1FB3488C00B74D30 /* ViewModel.swift */; };
+		CE3EF1611FB373D700B74D30 /* ExampleSpecs.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3EF1601FB373D700B74D30 /* ExampleSpecs.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -43,6 +44,7 @@
 		CE3EF14F1FB2FC2200B74D30 /* ExampleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleTests.swift; sourceTree = "<group>"; };
 		CE3EF1511FB2FC2200B74D30 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CE3EF15B1FB3488C00B74D30 /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
+		CE3EF1601FB373D700B74D30 /* ExampleSpecs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleSpecs.swift; sourceTree = "<group>"; };
 		D8BE82F54B9B9EBA8A2D3212 /* Pods-ExampleTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ExampleTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ExampleTests/Pods-ExampleTests.debug.xcconfig"; sourceTree = "<group>"; };
 		E5CDCADA0F972D9650847929 /* Pods_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E797A7D439368DA66CCDF3B1 /* Pods-ExampleTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ExampleTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-ExampleTests/Pods-ExampleTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -127,6 +129,7 @@
 			children = (
 				CE3EF14F1FB2FC2200B74D30 /* ExampleTests.swift */,
 				CE3EF1511FB2FC2200B74D30 /* Info.plist */,
+				CE3EF1601FB373D700B74D30 /* ExampleSpecs.swift */,
 			);
 			path = ExampleTests;
 			sourceTree = "<group>";
@@ -328,12 +331,16 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-ExampleTests/Pods-ExampleTests-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/Nimble/Nimble.framework",
+				"${BUILT_PRODUCTS_DIR}/Quick/Quick.framework",
 				"${BUILT_PRODUCTS_DIR}/RxTest/RxTest.framework",
 				"${BUILT_PRODUCTS_DIR}/RxTestExt/RxTestExt.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Nimble.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Quick.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxTest.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxTestExt.framework",
 			);
@@ -360,6 +367,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CE3EF1501FB2FC2200B74D30 /* ExampleTests.swift in Sources */,
+				CE3EF1611FB373D700B74D30 /* ExampleSpecs.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -27,4 +27,10 @@ Pod::Spec.new do |s|
 	cx.frameworks = 'XCTest'
   end
   
+  s.subspec 'Nimble' do |cn|
+  	cn.source_files = 'RxTestExt/Nimble/**/*'
+  	cn.dependency 'RxTestExt/Core'
+  	cn.dependency 'Nimble', '~> 7.0'
+  end
+  
 end
