@@ -12,25 +12,13 @@ Pod::Spec.new do |s|
   s.license      = { :type => 'MIT', :file => 'LICENSE' }
   s.author       = { "mosamer" => "mostafamamer@gmail.com" }
   s.source       = { :git => 'https://github.com/mosamer/RxTestExt.git', :tag => s.version.to_s }
+  
   s.ios.deployment_target = '9.0'
-
-  s.default_subspec = 'Core'
+  "pushed_with_swift_version": "4.0"
   
-  s.subspec 'Core' do |cs|
-    cs.source_files = 'RxTestExt/Core/**/*'
-    cs.dependency 'RxTest', '~> 4.0.0'
-  end
+  s.source_files = 'RxTestExt/**/*'
   
-  s.subspec 'XCTest' do |cx| 
-	cx.source_files = 'RxTestExt/XCTest/**/*'
-	cx.dependency 'RxTestExt/Core'
-	cx.frameworks = 'XCTest'
-  end
-  
-  s.subspec 'Nimble' do |cn|
-  	cn.source_files = 'RxTestExt/Nimble/**/*'
-  	cn.dependency 'RxTestExt/Core'
-  	cn.dependency 'Nimble', '~> 7.0'
-  end
+  s.frameworks = 'XCTest'
+  s.dependency 'RxTest', '~> 4.0.0'
   
 end
