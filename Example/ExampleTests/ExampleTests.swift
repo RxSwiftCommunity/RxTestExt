@@ -34,7 +34,7 @@ class ExampleTests: XCTestCase {
         let source = scheduler.record(source: viewModel.elements)
         scheduler.bind(events, to: viewModel.input)
         scheduler.start()
-        AssertSentNext(source)
+        assert(source).next()
     }
 
     func testNotSentNext() {
@@ -50,7 +50,7 @@ class ExampleTests: XCTestCase {
         let source = scheduler.record(source: viewModel.elements)
         scheduler.bind(events, to: viewModel.input)
         scheduler.start()
-        AssertError(source)
+        assert(source).error()
     }
 
     func testNotErrorEvent() {
@@ -66,7 +66,7 @@ class ExampleTests: XCTestCase {
         let source = scheduler.record(source: viewModel.elements)
         scheduler.bind(events, to: viewModel.input)
         scheduler.start()
-        AssertComplete(source)
+        assert(source).complete()
     }
     func testNotComplete() {
         let events = [next(10, "alpha")]
