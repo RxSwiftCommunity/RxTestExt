@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "RxTestExt"
-  s.version      = "0.1.0"
+  s.version      = "0.2.0"
   s.summary      = "A collection of operators & tools not found in the core RxTest distribution."
 
   s.description  = <<-DESC
