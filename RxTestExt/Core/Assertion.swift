@@ -22,19 +22,26 @@ public struct Assertion<T> {
 
     let base: TestableObserver<T>
     let location: Location
-    init(_ base: TestableObserver<T>, file: StaticString, line: UInt) {
+    let negated: Bool
+    init(_ base: TestableObserver<T>, file: StaticString, line: UInt, negated: Bool = false) {
         self.base = base
         self.location = Location(file: file, line: line)
+        self.negated = negated
     }
 
     func verify(pass: Bool, message: String) {
-        if !pass {
-            XCTFail("expected to \(message)", file: location.file, line: location.line)
+        if pass == negated {
+            XCTFail("expected \(negated ? "not" : "") to \(message)", file: location.file, line: location.line)
         }
     }
 
     var events: [Recorded<Event<T>>] {
         return base.events
+    }
+    
+	/// A negated version of current assertion
+    public var not: Assertion<T> {
+        return Assertion(base, file: location.file, line: location.line, negated: true)
     }
 }
 
