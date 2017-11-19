@@ -77,6 +77,20 @@ extension Assertion {
         verify(pass: actualCount == count,
                message: "error after <\(count)>, errored after <\(actualCount)> instead")
     }
+
+    /// A matcher that succeeds when testable observer terminated with a specific error
+    ///
+    /// - Parameter expectedError: Expected error
+    public func error<E: Error>(with expectedError: E) where E: Equatable {
+        guard let errorEvent = events.last, let error = errorEvent.value.error else {
+            verify(pass: false, message: "error")
+            return
+        }
+        guard let actualError = error as? E, actualError == expectedError else {
+            verify(pass: false, message: "error with <\(expectedError)>, got <\(error)>")
+            return
+        }
+    }
 }
 
 // MARK: Completion Matchers
