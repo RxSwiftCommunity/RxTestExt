@@ -37,11 +37,20 @@ public func assert<T>(_ source: TestableObserver<T>, file: StaticString = #file,
     return Assertion(source, file: file, line: line)
 }
 
+// MARK: Next Matchers
 extension Assertion {
     /// A matcher that succeeds when testable observer received one (or more) next events
     public func next() {
         verify(pass: events.first?.value.element != nil,
                message: "next")
+    }
+
+    /// A matcher that succeeds when testable observer receives a next event at a specific time.
+    ///
+    /// - Parameter time: Expected `next` time.
+    public func next(at time: TestTime) {
+        verify(pass: !events.filter { $0.time == time && $0.value.element != nil }.isEmpty,
+               message: "next at <\(time)>")
     }
 }
 
