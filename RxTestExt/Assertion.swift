@@ -43,15 +43,30 @@ extension Assertion {
         verify(pass: events.first?.value.element != nil,
                message: "next")
     }
+}
 
+// MARK: Error Matchers
+extension Assertion {
     /// A matcher that succeeds when testable observer terminated with an error event
     public func error() {
         verify(pass: events.last?.value.error != nil,
                message: "error")
     }
+
+    /// A matcher that succeeds when testable observer terminated with an error event at a specific test time.
+    ///
+    /// - Parameter time: Expected error test time.
+    public func error(at time: TestTime) {
+        guard let errorEvent = events.last, let error = errorEvent.value.error else {
+            verify(pass: false, message: "error")
+            return
+        }
+        verify(pass: errorEvent.time == time,
+               message: "error at <\(time)>, errored at <\(errorEvent.time)> instead.")
+    }
 }
 
-//MARK: Completion Matchers
+// MARK: Completion Matchers
 extension Assertion {
     /// A matcher that succeeds when testable observer terminated with a complete event
     public func complete() {

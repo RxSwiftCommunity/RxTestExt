@@ -52,6 +52,7 @@ class ExampleTests: XCTestCase {
         scheduler.bind(events, to: viewModel.input)
         scheduler.start()
         assert(source).error()
+        assert(source).error(at: 20)
     }
 
     func testNotErrorEvent() {
