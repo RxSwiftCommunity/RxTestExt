@@ -78,6 +78,17 @@ extension Assertion {
                message: "error after <\(count)>, errored after <\(actualCount)> instead")
     }
 
+    /// A matcher that succeeds when testable observer terminated with a specific error type.
+    ///
+    /// - Parameter expectedType: Expected error type
+    public func error<E: Swift.Error>(with expectedType: E.Type) {
+        guard let errorEvent = events.last, let error = errorEvent.value.error else {
+            verify(pass: false, message: "error")
+            return
+        }
+        verify(pass: type(of: error) == expectedType,
+               message: "error with <\(expectedType)>, errored with <\(type(of: error))> instead.")
+    }
     /// A matcher that succeeds when testable observer terminated with a specific error
     ///
     /// - Parameter expectedError: Expected error

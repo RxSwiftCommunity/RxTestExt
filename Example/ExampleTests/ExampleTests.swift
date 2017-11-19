@@ -61,6 +61,7 @@ class ExampleTests: XCTestCase {
         assert(source).error()
         assert(source).error(at: 20)
         assert(source).error(after: 1)
+        assert(source).error(with: TestError.self)
         assert(source).error(with: TestError())
     }
 
