@@ -57,12 +57,25 @@ extension Assertion {
     ///
     /// - Parameter time: Expected error test time.
     public func error(at time: TestTime) {
-        guard let errorEvent = events.last, let error = errorEvent.value.error else {
+        guard let errorEvent = events.last, let _ = errorEvent.value.error else {
             verify(pass: false, message: "error")
             return
         }
         verify(pass: errorEvent.time == time,
                message: "error at <\(time)>, errored at <\(errorEvent.time)> instead.")
+    }
+
+    /// A matcher that succeeds when testable observer terminated with an error after a specific number of next events.
+    ///
+    /// - Parameter count: Number of next events before complete.
+    public func error(after count: Int) {
+        guard let errorEvent = events.last, let _ = errorEvent.value.error else {
+            verify(pass: false, message: "error")
+            return
+        }
+        let actualCount = events.count - 1
+        verify(pass: actualCount == count,
+               message: "error after <\(count)>, errored after <\(actualCount)> instead")
     }
 }
 

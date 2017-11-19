@@ -53,6 +53,7 @@ class ExampleTests: XCTestCase {
         scheduler.start()
         assert(source).error()
         assert(source).error(at: 20)
+        assert(source).error(after: 1)
     }
 
     func testNotErrorEvent() {
