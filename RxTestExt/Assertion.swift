@@ -72,7 +72,7 @@ extension Assertion where T: Equatable {
     ///   - expectedValue: Expected value.
     public func next(at index: Int, equal expectedValue: T) {
         let nextEvents = events.filter { $0.value.element != nil }
-        guard nextEvents.count > index else {
+        guard nextEvents.count > index, index >= 0 else {
             verify(pass: false,
                    message: "get enough next events")
             return
@@ -81,6 +81,25 @@ extension Assertion where T: Equatable {
         verify(pass: actualValue == expectedValue,
                message: "equal <\(expectedValue)>, got <\(actualValue.stringify)>")
     }
+
+    /// A matcher that succeeds when last emitted next is equal to given value.
+    ///
+    /// - Parameter expectedValue: Expected value.
+    public func lastNext(equal expectedValue: T) {
+        let nextEvents = events.filter { $0.value.element != nil }
+        next(at: nextEvents.count - 1, equal: expectedValue)
+    }
+
+    /// A matcher that succeeds when first emitted next is equal to given value.
+    ///
+    /// - Parameter expectedValue: Expected value.
+    public func firstNext(equal expectedValue: T) {
+        next(at: 0, equal: expectedValue)
+    }
+}
+
+public func == <T: Equatable>(lhs: Assertion<T>, rhs: T) {
+    lhs.firstNext(equal: rhs)
 }
 
 // MARK: Error Matchers
