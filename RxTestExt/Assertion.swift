@@ -49,10 +49,40 @@ extension Assertion {
         verify(pass: events.last?.value.error != nil,
                message: "error")
     }
+}
 
+//MARK: Completion Matchers
+extension Assertion {
     /// A matcher that succeeds when testable observer terminated with a complete event
     public func complete() {
         verify(pass: events.last?.value.isCompleted ?? false,
                message: "complete")
+    }
+
+    /// A matcher that succeeds if testable observer terminated with a complete event at a specific test time.
+    ///
+    /// - Parameter time: Test time to match completion event
+    public func complete(at time: TestTime) {
+        guard let completeEvent = events.last, completeEvent.value.isCompleted else {
+            verify(pass: false,
+                   message: "complete")
+            return
+        }
+        verify(pass: completeEvent.time == time,
+               message: "complete at <\(time)>, completed at <\(completeEvent.time)> instead")
+    }
+
+    /// A matcher that succeeds if testable observer terminated with a complete event after a specific number of next events.
+    ///
+    /// - Parameter count: Number of next events before complete.
+    public func complete(after count: Int) {
+        guard let completeEvent = events.last, completeEvent.value.isCompleted else {
+            verify(pass: false,
+                   message: "complete")
+            return
+        }
+        let actualCount = events.count - 1
+        verify(pass: actualCount == count,
+               message: "complete after <\(count)>, completed after <\(actualCount)> instead")
     }
 }
