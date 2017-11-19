@@ -44,6 +44,7 @@ class ExampleTests: XCTestCase {
         scheduler.start()
         assert(source).next()
         assert(source).next(at: 10)
+        assert(source).next(times: 1)
     }
 
     func testNotSentNext() {

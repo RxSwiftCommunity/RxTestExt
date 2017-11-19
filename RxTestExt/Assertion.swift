@@ -52,6 +52,15 @@ extension Assertion {
         verify(pass: !events.filter { $0.time == time && $0.value.element != nil }.isEmpty,
                message: "next at <\(time)>")
     }
+
+    /// A matcher that succeeds when testable observer recieves a specific number of next events.
+    ///
+    /// - Parameter expectedCount: Expected number of next events.
+    public func next(times expectedCount: Int) {
+        let actualCount = events.filter { $0.value.element != nil }.count
+        verify(pass: actualCount == expectedCount,
+               message: "next <\(expectedCount)> times, got <\(actualCount)> event(s)")
+    }
 }
 
 // MARK: Error Matchers
