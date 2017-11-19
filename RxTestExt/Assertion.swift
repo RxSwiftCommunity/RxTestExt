@@ -37,12 +37,69 @@ public func assert<T>(_ source: TestableObserver<T>, file: StaticString = #file,
     return Assertion(source, file: file, line: line)
 }
 
+// MARK: Next Matchers
 extension Assertion {
     /// A matcher that succeeds when testable observer received one (or more) next events
     public func next() {
         verify(pass: events.first?.value.element != nil,
                message: "next")
     }
+
+    /// A matcher that succeeds when testable observer receives a next event at a specific time.
+    ///
+    /// - Parameter time: Expected `next` time.
+    public func next(at time: TestTime) {
+        verify(pass: !events.filter { $0.time == time && $0.value.element != nil }.isEmpty,
+               message: "next at <\(time)>")
+    }
+
+    /// A matcher that succeeds when testable observer recieves a specific number of next events.
+    ///
+    /// - Parameter expectedCount: Expected number of next events.
+    public func next(times expectedCount: Int) {
+        let actualCount = events.filter { $0.value.element != nil }.count
+        verify(pass: actualCount == expectedCount,
+               message: "next <\(expectedCount)> times, got <\(actualCount)> event(s)")
+    }
+}
+
+// MARK: Next Equality Matchers
+extension Assertion where T: Equatable {
+    /// A matcher that succeeds when value emitted at a specific index equal a given value.
+    ///
+    /// - Parameters:
+    ///   - index: Event index.
+    ///   - expectedValue: Expected value.
+    public func next(at index: Int, equal expectedValue: T) {
+        let nextEvents = events.filter { $0.value.element != nil }
+        guard nextEvents.count > index, index >= 0 else {
+            verify(pass: false,
+                   message: "get enough next events")
+            return
+        }
+        let actualValue = nextEvents[index].value.element
+        verify(pass: actualValue == expectedValue,
+               message: "equal <\(expectedValue)>, got <\(actualValue.stringify)>")
+    }
+
+    /// A matcher that succeeds when last emitted next is equal to given value.
+    ///
+    /// - Parameter expectedValue: Expected value.
+    public func lastNext(equal expectedValue: T) {
+        let nextEvents = events.filter { $0.value.element != nil }
+        next(at: nextEvents.count - 1, equal: expectedValue)
+    }
+
+    /// A matcher that succeeds when first emitted next is equal to given value.
+    ///
+    /// - Parameter expectedValue: Expected value.
+    public func firstNext(equal expectedValue: T) {
+        next(at: 0, equal: expectedValue)
+    }
+}
+
+public func == <T: Equatable>(lhs: Assertion<T>, rhs: T) {
+    lhs.firstNext(equal: rhs)
 }
 
 // MARK: Error Matchers
