@@ -45,6 +45,8 @@ class ExampleTests: XCTestCase {
         assert(source).next()
         assert(source).next(at: 10)
         assert(source).next(times: 1)
+
+        assert(source).next(at: 0, equal: "alpha")
     }
 
     func testNotSentNext() {

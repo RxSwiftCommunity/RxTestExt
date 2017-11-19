@@ -63,6 +63,26 @@ extension Assertion {
     }
 }
 
+// MARK: Next Equality Matchers
+extension Assertion where T: Equatable {
+    /// A matcher that succeeds when value emitted at a specific index equal a given value.
+    ///
+    /// - Parameters:
+    ///   - index: Event index.
+    ///   - expectedValue: Expected value.
+    public func next(at index: Int, equal expectedValue: T) {
+        let nextEvents = events.filter { $0.value.element != nil }
+        guard nextEvents.count > index else {
+            verify(pass: false,
+                   message: "get enough next events")
+            return
+        }
+        let actualValue = nextEvents[index].value.element
+        verify(pass: actualValue == expectedValue,
+               message: "equal <\(expectedValue)>, got <\(actualValue.stringify)>")
+    }
+}
+
 // MARK: Error Matchers
 extension Assertion {
     /// A matcher that succeeds when testable observer terminated with an error event
