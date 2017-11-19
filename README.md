@@ -2,7 +2,12 @@
 A collection of operators &amp; tools not found in the core RxTest distribution.
 
 # Usage
-## XCTest
+`RxTestExt` can be used for common unit testing tasks like,
+- recording events from an observable into a `Testable Observer`
+- binding an array of recorded events (timeline) to an observer.
+- assert that recorded events match specific criteria.
+
+For example:
 ```
 func testSomething() {
    let source = scheduler.record(source: someObservable)
@@ -19,6 +24,6 @@ func testSomething() {
    - record observable events into a `TestableObserver`
    - bind recorded events to an observer
 - Rx Timeline matchers functions
-   - assert `TestableObserver` recorded any next events.
-   - assert `TestableObserver` received any error events.
-   - assert `TestableObserver` eventually completed.
+   - assert `TestableObserver` recorded `next` events.
+   - assert `TestableObserver` received `error` events.
+   - assert `TestableObserver` received `complete` events.
