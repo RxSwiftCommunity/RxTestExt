@@ -69,6 +69,7 @@ class ExampleTests: XCTestCase {
         scheduler.start()
         assert(source).complete()
         assert(source).complete(at: 10)
+        assert(source).complete(after: 1)
     }
 
     func testNotComplete() {
