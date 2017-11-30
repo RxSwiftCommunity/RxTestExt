@@ -8,10 +8,10 @@ Pod::Spec.new do |s|
   Provide developers with extensions for RxTest. The library includes a set of extensions for test schedulers and assertions on testable observers.
                    DESC
 
-  s.homepage     = "https://github.com/mosamer/RxTestExt"
+  s.homepage     = "https://github.com/RxSwiftCommunity/RxTestExt"
   s.license      = { :type => 'MIT', :file => 'LICENSE' }
   s.author       = { "mosamer" => "mostafamamer@gmail.com" }
-  s.source       = { :git => 'https://github.com/mosamer/RxTestExt.git', :tag => s.version.to_s }
+  s.source       = { :git => 'https://github.com/RxSwiftCommunity/RxTestExt.git', :tag => s.version.to_s }
   
   s.ios.deployment_target = '9.0'
   
