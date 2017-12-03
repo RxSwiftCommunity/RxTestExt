@@ -27,7 +27,7 @@ public struct Assertion<T> {
         return base.events
     }
 
-	/// A negated version of current assertion
+    /// A negated version of current assertion
     public var not: Assertion<T> {
         return Assertion(base, file: location.file, line: location.line, negated: true)
     }
@@ -63,6 +63,23 @@ extension Assertion {
     }
 }
 
+extension Assertion {
+    /// A matcher that succeeds when testable obserevr never recieves an event.
+    ///
+    /// This is to macth a similar behavior of `Observabel.never()`
+    public func never() {
+        verify(pass: events.isEmpty,
+               message: "never emits, got <\(events.count)> event(s)")
+    }
+
+    /// A matcher that succeeds when testable obserevr only recieves a `completed` event.
+    ///
+    /// This is to macth a similar behavior of `Observabel.empty()`
+    public func empty() {
+        verify(pass: events.first?.value.isCompleted ?? false,
+               message: "complete with no other events")
+    }
+}
 // MARK: Next Equality Matchers
 extension Assertion where T: Equatable {
     /// A matcher that succeeds when value emitted at a specific index equal a given value.
@@ -95,6 +112,29 @@ extension Assertion where T: Equatable {
     /// - Parameter expectedValue: Expected value.
     public func firstNext(equal expectedValue: T) {
         next(at: 0, equal: expectedValue)
+    }
+
+    /// A matcher that succeeds when testable obserevr only recieves a `next` event and immediately completes.
+    ///
+    /// This is to macth a similar behavior of `Observabel.just()`
+    public func just(_ value: T) {
+        let msg = "get <\(value)> then completes"
+        guard events.count == 2 else {
+            verify(pass: false, message: msg + ", emitted <\(events.count)> event(s)")
+            return
+        }
+        let next = events[0]
+        let complete = events[1]
+        guard complete.value.isCompleted else {
+            verify(pass: false, message: msg + ", didnot complete")
+            return
+        }
+        guard next.time == complete.time else {
+            verify(pass: false, message: msg + ", didnot complete immediately")
+            return
+        }
+        verify(pass: next.value.element == value,
+               message: msg + ", got <\(next.value.element.stringify)>")
     }
 }
 
