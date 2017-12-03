@@ -110,6 +110,12 @@ class ExampleTests: XCTestCase {
         scheduler.start()
         assert(source).never()
     }
+    func testEmpty() {
+        let source = scheduler.record(source: viewModel.elements)
+        scheduler.bind([completed(10)], to: viewModel.input)
+        scheduler.start()
+        assert(source).empty()
+    }
     override func tearDown() {
         viewModel = nil
         scheduler = nil

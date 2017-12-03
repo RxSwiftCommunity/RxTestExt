@@ -71,6 +71,14 @@ extension Assertion {
         verify(pass: events.isEmpty,
                message: "never emits, got <\(events.count)> event(s)")
     }
+
+    /// A matcher that succeeds when testable obserevr only recieves a `completed` event.
+    ///
+    /// This is to macth a similar behavior of `Observabel.empty()`
+    public func empty() {
+        verify(pass: events.first?.value.isCompleted ?? false,
+               message: "complete with no other events")
+    }
 }
 // MARK: Next Equality Matchers
 extension Assertion where T: Equatable {
