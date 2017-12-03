@@ -116,6 +116,12 @@ class ExampleTests: XCTestCase {
         scheduler.start()
         assert(source).empty()
     }
+    func testJust() {
+        let source = scheduler.record(source: viewModel.elements)
+        scheduler.bind([next(10, "alpha"), completed(10)], to: viewModel.input)
+        scheduler.start()
+        assert(source).just("alpha")
+    }
     override func tearDown() {
         viewModel = nil
         scheduler = nil
