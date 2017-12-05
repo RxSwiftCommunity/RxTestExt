@@ -80,6 +80,41 @@ extension Assertion {
                message: "complete with no other events")
     }
 }
+// MARK: Next Value Matchers
+extension Assertion {
+    /// A matcher that succeeds when value emitted at a specific index matches a given value.
+    ///
+    /// - Parameters:
+    ///   - index: Event index.
+    ///   - matcher: A closure to evaluate if actual value matches.
+    public func next(at index: Int, match matcher: (T?) -> (Bool, String)) {
+        let nextEvents = events.filter { $0.value.element != nil }
+        guard nextEvents.count > index, index >= 0 else {
+            verify(pass: false,
+                   message: "get enough next events")
+            return
+        }
+        let actualValue = nextEvents[index].value.element
+        let (pass, msg) = matcher(actualValue)
+        verify(pass: pass,
+               message: msg)
+    }
+
+    /// A matcher that succeeds when last emitted next matches a given value.
+    ///
+    ///   - matcher: A closure to evaluate if actual value matches.
+    public func lastNext(match matcher: (T?) -> (Bool, String)) {
+        let nextEvents = events.filter { $0.value.element != nil }
+        next(at: nextEvents.count - 1, match: matcher)
+    }
+
+    /// A matcher that succeeds when first emitted next matches a given value.
+    ///
+    ///   - matcher: A closure to evaluate if actual value matches.
+    public func firstNext(match matcher: (T?) -> (Bool, String)) {
+        next(at: 0, match: matcher)
+    }
+}
 // MARK: Next Equality Matchers
 extension Assertion where T: Equatable {
     /// A matcher that succeeds when value emitted at a specific index equal a given value.
