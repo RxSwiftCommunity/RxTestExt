@@ -8,7 +8,6 @@ target 'Example' do
 
   target 'ExampleTests' do
     inherit! :search_paths
-    pod 'Quick'
     pod 'RxTestExt', :path => '../'
   end
 
