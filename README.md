@@ -1,4 +1,7 @@
 # RxTestExt
+[![CircleCI](https://circleci.com/gh/RxSwiftCommunity/RxTestExt.png)](https://circleci.com/gh/RxSwiftCommunity/RxTestExt/tree/master)
+![pod](https://img.shields.io/cocoapods/v/RxTestExt.svg)
+
 A collection of operators &amp; tools not found in the core RxTest distribution.
 
 # Usage
