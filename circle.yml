@@ -1,0 +1,18 @@
+machine:
+  xcode:
+    version: 9.2
+  environment:
+    LANG: en_US.UTF-8
+
+dependencies:
+  override:
+    - pod install --project-directory=Example/ --silent
+  cache_directories:
+    - ~/.cocoapods
+    - Example/Pods
+
+test:
+  pre:
+    - set -o pipefail
+  override:
+    - xcodebuild test -scheme Example -workspace Example/Example.xcworkspace -sdk iphonesimulator -destination "name=iPhone 8" | xcpretty -c
