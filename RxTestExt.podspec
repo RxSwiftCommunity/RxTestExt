@@ -15,9 +15,16 @@ Pod::Spec.new do |s|
   
   s.ios.deployment_target = '9.0'
   
-  s.source_files = 'RxTestExt/**/*'
+  s.subspec "Core" do |ss|
+    ss.source_files = 'RxTestExt/Core/*.{swift}'
+    ss.dependency 'RxTest', '~> 4'
+  end
+
+  s.subspec "Relays" do |ss|
+    ss.source_files = "RxTestExt/Relays/*.{swift}"
+    ss.dependency "RxTestExt/Core"
+    ss.dependency 'RxCocoa', '~> 4'
+  end
   
   s.frameworks = 'XCTest'
-  s.dependency 'RxTest', '~> 4.0.0'
-  
 end

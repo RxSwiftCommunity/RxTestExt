@@ -189,7 +189,7 @@ extension Assertion {
     ///
     /// - Parameter time: Expected error test time.
     public func error(at time: TestTime) {
-        guard let errorEvent = events.last, let _ = errorEvent.value.error else {
+        guard let errorEvent = events.last, errorEvent.value.error != nil else {
             verify(pass: false, message: "error")
             return
         }
@@ -201,7 +201,7 @@ extension Assertion {
     ///
     /// - Parameter count: Number of next events before complete.
     public func error(after count: Int) {
-        guard let errorEvent = events.last, let _ = errorEvent.value.error else {
+        guard let errorEvent = events.last, errorEvent.value.error != nil else {
             verify(pass: false, message: "error")
             return
         }
