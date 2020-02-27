@@ -1,5 +1,5 @@
 import RxSwift
-import RxCocoa
+import RxRelay
 import RxTest
 
 extension TestScheduler {
