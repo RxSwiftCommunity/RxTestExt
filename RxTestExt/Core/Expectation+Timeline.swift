@@ -22,6 +22,14 @@ public extension Expectation where Element: Equatable {
     func matchTimeline(_ expectedEvents: [Recorded<Event<Element>>]) {
         matchTimeline(expectedEvents, predicate: { $0 == $1 })
     }
+    
+    /// Expects a testable obserevr to only recieve a `next` event and immediately completes.
+    ///
+    /// This is to macth a similar behavior of `Observabel.just(value)`
+    func beJust(_ value: Element) {
+        beJust(expectedDescription: "be just <\(value)>",
+               expectedFailureDescription: "to emit <\(value)> and complete") { $0 == value }
+    }
 }
 
 public extension Expectation {
@@ -45,6 +53,27 @@ public extension Expectation {
                 return .failure(expected: "to only complete", actual: "<\(marble(for: events))>")
             }
             return .success("be empty")
+        }
+    }
+    
+    /// Expects a testable obserevr to only recieve a `next` event and immediately completes.
+    ///
+    /// This is to macth a similar behavior of `Observabel.just(value)`
+    /// - Parameters:
+    ///   - expectedDescription: Placeholder description for negated failure messages
+    ///   - expectedFailureDescription: Placeholder description for expected failure message
+    ///   - valuePredicate: Predicate to evaluate if event value matches
+    func beJust(expectedDescription: String = "match `just` timeline",
+                expectedFailureDescription: String = "match `just` timeline",
+                _ valuePredicate: (Element) -> Bool) {
+        evaluate { events in
+            guard events.count == 2,
+                  let value = events[0].value.element,
+                  valuePredicate(value),
+                  events[1].value.isCompleted else {
+                return .failure(expected: expectedFailureDescription, actual: "<\(marble(for: events))>")
+            }
+            return .success(expectedDescription)
         }
     }
 }

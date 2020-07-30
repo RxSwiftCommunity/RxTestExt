@@ -118,6 +118,7 @@ extension Assertion where T: Equatable {
     /// A matcher that succeeds when testable obserevr only recieves a `next` event and immediately completes.
     ///
     /// This is to macth a similar behavior of `Observabel.just()`
+    @available(*, deprecated)
     public func just(_ value: T) {
         let msg = "get <\(value)> then completes"
         guard events.count == 2 else {

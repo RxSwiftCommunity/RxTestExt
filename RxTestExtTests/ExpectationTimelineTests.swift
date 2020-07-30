@@ -120,4 +120,24 @@ class ExpectationTimelineTests: XCTestCase {
             then(sut).should.beEmpty()
         }
     }
+    // MARK: Just
+    func test_beJust_it_succeedsWhenMatchJust() {
+        scheduler.bind(.just("foo"), to: sut)
+        scheduler.start()
+        then(sut).should.beJust("foo")
+    }
+    func test_beJust_it_handlesNegation() {
+        scheduler.bind(.just("foo"), to: sut)
+        scheduler.start()
+        failWithMessage("expected not to be just <foo>") {
+            then(sut).shouldNot.beJust("foo")
+        }
+    }
+    func test_beJust_it_handlesFailures() {
+        scheduler.bind([.next(10, "foo"), .next(20, "bar")], to: sut)
+        scheduler.start()
+        failWithMessage("expected to emit <foo> and complete, got <foo-bar>") {
+            then(sut).should.beJust("foo")
+        }
+    }
 }
