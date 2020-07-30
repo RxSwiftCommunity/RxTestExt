@@ -24,6 +24,18 @@ public extension Expectation where Element: Equatable {
     }
 }
 
+public extension Expectation {
+    /// Expects a testable observer to never receive an event
+    ///
+    /// This is to match a similar behavior of `Observable.never()`
+    func beNever() {
+        evaluate { events in
+            events.isEmpty ?
+                .success("emit ever") :
+                .failure(expected: "no events", actual: "\(events.count) events")
+        }
+    }
+}
 // MARK: - Marble diagram
 extension Event {
     var stringValue: String {

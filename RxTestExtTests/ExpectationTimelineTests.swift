@@ -65,4 +65,25 @@ class ExpectationTimelineTests: XCTestCase {
             then(sut).should.matchTimeline(events)
         }
     }
+    
+    // MARK: Never
+    func test_never_it_succeedWhenMatchNever() {
+        scheduler.bind(.never(), to: sut)
+        scheduler.start()
+        then(sut).should.beNever()
+    }
+    func test_never_it_handlesNegation() {
+        scheduler.bind(.never(), to: sut)
+        scheduler.start()
+        failWithMessage("expected not to emit ever") {
+            then(sut).shouldNot.beNever()
+        }
+    }
+    func test_never_it_failsWhenEventsRecieved() {
+        scheduler.bind([.next(0, "foo")], to: sut)
+        scheduler.start()
+        failWithMessage("expected no events, got 1 events") {
+            then(sut).should.beNever()
+        }
+    }
 }

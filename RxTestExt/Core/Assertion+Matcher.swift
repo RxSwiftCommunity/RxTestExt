@@ -31,6 +31,7 @@ extension Assertion {
     /// A matcher that succeeds when testable obserevr never recieves an event.
     ///
     /// This is to macth a similar behavior of `Observabel.never()`
+    @available(*, deprecated)
     public func never() {
         verify(pass: events.isEmpty,
                message: "never emits, got <\(events.count)> event(s)")
