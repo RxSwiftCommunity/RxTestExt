@@ -21,6 +21,10 @@ let package = Package(
                 .product(name: "RxTest", package: "RxSwift"),
                 .product(name: "RxRelay", package: "RxSwift"),
             ],
-            path: "RxTestExt")
+            path: "RxTestExt"),
+        .testTarget(
+            name: "RxTestExtTests",
+            dependencies: ["RxTestExt"],
+            path: "RxTestExtTests")
     ]
 )
