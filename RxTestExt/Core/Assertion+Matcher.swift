@@ -77,6 +77,7 @@ extension Assertion {
     /// A matcher that succeeds when first emitted next matches a given value.
     ///
     ///   - matcher: A closure to evaluate if actual value matches.
+    @available(*, deprecated)
     public func firstNext(match matcher: (T?) -> (Bool, String)) {
         next(at: 0, match: matcher)
     }
@@ -111,6 +112,7 @@ extension Assertion where T: Equatable {
     /// A matcher that succeeds when first emitted next is equal to given value.
     ///
     /// - Parameter expectedValue: Expected value.
+    @available(*, deprecated)
     public func firstNext(equal expectedValue: T) {
         next(at: 0, equal: expectedValue)
     }

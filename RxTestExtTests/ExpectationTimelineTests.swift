@@ -140,4 +140,31 @@ class ExpectationTimelineTests: XCTestCase {
             then(sut).should.beJust("foo")
         }
     }
+    // MARK: Start With
+    func test_startWith_it_succeedsWhenMatchStartWith() {
+        scheduler.bind(Observable.just("foo").startWith("start"), to: sut)
+        scheduler.start()
+        then(sut).should.startWith("start")
+    }
+    func test_startWith_it_handlesNegation() {
+        scheduler.bind(Observable.just("foo").startWith("start"), to: sut)
+        scheduler.start()
+        failWithMessage("expected not to start with <start>") {
+            then(sut).shouldNot.startWith("start")
+        }
+    }
+    func test_startWith_it_handlesFailuresWhenStartedWithDifferentValue() {
+        scheduler.bind([.next(10, "foo"), .next(20, "bar")], to: sut)
+        scheduler.start()
+        failWithMessage("expected to start with <start>, got <foo>") {
+            then(sut).should.startWith("start")
+        }
+    }
+    func test_startWith_it_handlesFailuresWhenStartedWithNoValue() {
+        scheduler.bind([.completed(10)], to: sut)
+        scheduler.start()
+        failWithMessage("expected to start with <start>, got nothing") {
+            then(sut).should.startWith("start")
+        }
+    }
 }

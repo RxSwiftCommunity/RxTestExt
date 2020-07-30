@@ -26,9 +26,21 @@ public extension Expectation where Element: Equatable {
     /// Expects a testable obserevr to only recieve a `next` event and immediately completes.
     ///
     /// This is to macth a similar behavior of `Observabel.just(value)`
+    /// - Parameter value: A given value to match
     func beJust(_ value: Element) {
         beJust(expectedDescription: "be just <\(value)>",
                expectedFailureDescription: "to emit <\(value)> and complete") { $0 == value }
+    }
+    
+    /// Expects a testable observer to start with given value as a next event.
+    ///
+    /// This is to match a similar behavior of `Observable.startWith(value)`
+    /// - Parameter value: A given value to match
+    func startWith(_ value: Element) {
+        startWith(expectedDescription: "start with <\(value)>",
+                  expectedFailureDescription: "to start with <\(value)>") {
+            $0 == value
+        }
     }
 }
 
@@ -74,6 +86,27 @@ public extension Expectation {
                 return .failure(expected: expectedFailureDescription, actual: "<\(marble(for: events))>")
             }
             return .success(expectedDescription)
+        }
+    }
+    
+    /// Expects a testable observer to start with given value as a next event.
+    ///
+    /// This is to match a similar behavior of `Observable.startWith(value)`
+    /// - Parameters:
+    ///   - expectedDescription: Placeholder description for negated failure messages
+    ///   - expectedFailureDescription: Placeholder description for expected failure message
+    ///   - valuePredicate: Predicate to evaluate if event value matches
+    func startWith(expectedDescription: String = "start with given value",
+                   expectedFailureDescription: String = "start with given value",
+                   _ valuePredicate: (Element) -> Bool) {
+        evaluate { events in
+            guard let value = events.first?.value.element else {
+                return .failure(expected: expectedFailureDescription, actual: "nothing")
+            }
+            return valuePredicate(value) ?
+                .success(expectedDescription) :
+                .failure(expected: expectedFailureDescription,
+                         actual: "<\(value)>")
         }
     }
 }
