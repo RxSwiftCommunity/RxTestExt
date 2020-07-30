@@ -40,6 +40,7 @@ extension Assertion {
     /// A matcher that succeeds when testable obserevr only recieves a `completed` event.
     ///
     /// This is to macth a similar behavior of `Observabel.empty()`
+    @available(*, deprecated)
     public func empty() {
         verify(pass: events.first?.value.isCompleted ?? false,
                message: "complete with no other events")

@@ -86,4 +86,38 @@ class ExpectationTimelineTests: XCTestCase {
             then(sut).should.beNever()
         }
     }
+    // MARK: Empty
+    func test_empty_it_suceedsWhenMatchEmpty() {
+        scheduler.bind(.empty(), to: sut)
+        scheduler.start()
+        then(sut).should.beEmpty()
+    }
+    func test_empty_it_handlesNegation() {
+        scheduler.bind(.empty(), to: sut)
+        scheduler.start()
+        failWithMessage("expected not to be empty") {
+            then(sut).shouldNot.beEmpty()
+        }
+    }
+    func test_empty_it_failsWhenNoEventsReceived() {
+        scheduler.bind([], to: sut)
+        scheduler.start()
+        failWithMessage("expected to only complete, got <>") {
+            then(sut).should.beEmpty()
+        }
+    }
+    func test_empty_it_failsWhenNextEventsReceived() {
+        scheduler.bind([.next(10, "foo"), .completed(10)], to: sut)
+        scheduler.start()
+        failWithMessage("expected to only complete, got <foo-|>") {
+            then(sut).should.beEmpty()
+        }
+    }
+    func test_empty_it_failsWhenErrorEventReceived() {
+        scheduler.bind([.error(10, TestError(""))], to: sut)
+        scheduler.start()
+        failWithMessage("expected to only complete, got <x>") {
+            then(sut).should.beEmpty()
+        }
+    }
 }

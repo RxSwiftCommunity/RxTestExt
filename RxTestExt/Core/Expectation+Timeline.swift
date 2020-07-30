@@ -35,6 +35,18 @@ public extension Expectation {
                 .failure(expected: "no events", actual: "\(events.count) events")
         }
     }
+    /// Expects a testable obserevr to only recieve a `completed` event.
+    ///
+    /// This is to macth a similar behavior of `Observabel.empty()`
+    func beEmpty() {
+        evaluate { events in
+            guard events.count == 1,
+                  events[0].value.isCompleted else {
+                return .failure(expected: "to only complete", actual: "<\(marble(for: events))>")
+            }
+            return .success("be empty")
+        }
+    }
 }
 // MARK: - Marble diagram
 extension Event {
