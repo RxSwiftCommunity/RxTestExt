@@ -16,7 +16,10 @@ Pod::Spec.new do |s|
   s.ios.deployment_target = '9.0'
 
   s.subspec "Core" do |ss|
-    ss.source_files = 'RxTestExt/Core/*.{swift}'
+    ss.source_files = [
+        'RxTestExt/Core/*.{swift}',
+        'RxTestExt/Assertion/*.{swift}',
+    ]
     ss.dependency 'RxTest', '~> 5.0'
   end
 
