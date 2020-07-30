@@ -32,3 +32,13 @@ public struct Assertion<T> {
         return Assertion(base, file: location.file, line: location.line, negated: true)
     }
 }
+
+extension Assertion {
+    var should: Expectation<T> {
+        Expectation(assertion: self, negated: false)
+    }
+    
+    var shouldNot: Expectation<T> {
+        Expectation(assertion: self, negated: true)
+    }
+}
