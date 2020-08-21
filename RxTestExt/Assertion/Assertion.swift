@@ -33,7 +33,7 @@ public struct Assertion<T> {
     }
 }
 
-extension Assertion {
+public extension Assertion {
     var should: Expectation<T> {
         Expectation(assertion: self, negated: false)
     }
