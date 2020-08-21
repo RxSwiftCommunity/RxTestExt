@@ -71,21 +71,21 @@ class ExpectationCompleteTests: XCTestCase {
     func test_completeAfter_it_handlesNegation() {
         scheduler.bind([.next(10, "foo"), .completed(10)], to: sut)
         scheduler.start()
-        failWithMessage("expected not to complete after <1> events") {
+        failWithMessage("expected not to complete after <1> values") {
             then(sut).shouldNot.complete(after: 1)
         }
     }
     func test_completeAfter_it_failsIfNotComplete() {
         scheduler.bind([.next(10, "foo")], to: sut)
         scheduler.start()
-        failWithMessage("expected to complete after <1> events, got no complete events") {
+        failWithMessage("expected to complete after <1> values, got no complete events") {
             then(sut).should.complete(after: 1)
         }
     }
     func test_completeAfter_it_failsIfCompletedAfterDifferentCount() {
         scheduler.bind([.next(10, "foo"), .next(20, "bar"), .completed(30)], to: sut)
         scheduler.start()
-        failWithMessage("expected to complete after <1> events, got complete after <2> events") {
+        failWithMessage("expected to complete after <1> events, got complete after <2> values") {
             then(sut).should.complete(after: 1)
         }
     }

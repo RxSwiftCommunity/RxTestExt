@@ -34,14 +34,14 @@ public extension Expectation {
         evaluate { events in
             guard let terminating = events.last,
                   terminating.value.isCompleted else {
-                return .failure(expected: "to complete after <\(expectedCount)> events", actual: "no complete events")
+                return .failure(expected: "to complete after <\(expectedCount)> values", actual: "no complete events")
             }
             
-            let actualCount = events.dropLast().count
+            let actualCount = events.count - 1
             guard actualCount == expectedCount else {
-                return .failure(expected: "to complete after <\(expectedCount)> events", actual: "complete after <\(actualCount)> events")
+                return .failure(expected: "to complete after <\(expectedCount)> events", actual: "complete after <\(actualCount)> values")
             }
-            return .success("complete after <\(expectedCount)> events")
+            return .success("complete after <\(expectedCount)> values")
         }
     }
 }

@@ -39,7 +39,7 @@ extension TestScheduler {
 }
 
 func failWithMessage(_ message: String,
-                     file: StaticString = #filePath,
+                     file: StaticString = #file,
                      line: UInt = #line,
                      closure: () -> Void) {
     let handler = Evaluation.assertionHandler
@@ -49,9 +49,9 @@ func failWithMessage(_ message: String,
     Evaluation.assertionHandler = handler
     
     guard let failure = failureMessage else {
-        XCTFail("did not fail", file: file, line: line)
+        XCTFail("did not fail", file: (file), line: line)
         return
     }
     
-    XCTAssertEqual(failure, message, file: file, line: line)
+    XCTAssertEqual(failure, message, file: (file), line: line)
 }
