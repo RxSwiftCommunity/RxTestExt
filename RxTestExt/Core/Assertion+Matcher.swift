@@ -1,41 +1,5 @@
-import XCTest
-import RxSwift
+import Foundation
 import RxTest
-
-public struct Assertion<T> {
-    struct Location {
-        let file: StaticString
-        let line: UInt
-    }
-
-    let base: TestableObserver<T>
-    let location: Location
-    let negated: Bool
-    init(_ base: TestableObserver<T>, file: StaticString, line: UInt, negated: Bool = false) {
-        self.base = base
-        self.location = Location(file: file, line: line)
-        self.negated = negated
-    }
-
-    func verify(pass: Bool, message: String) {
-        if pass == negated {
-            XCTFail("expected \(negated ? "not" : "") to \(message)", file: location.file, line: location.line)
-        }
-    }
-
-    var events: [Recorded<Event<T>>] {
-        return base.events
-    }
-
-    /// A negated version of current assertion
-    public var not: Assertion<T> {
-        return Assertion(base, file: location.file, line: location.line, negated: true)
-    }
-}
-
-public func assert<T>(_ source: TestableObserver<T>, file: StaticString = #file, line: UInt = #line) -> Assertion<T> {
-    return Assertion(source, file: file, line: line)
-}
 
 // MARK: Next Matchers
 extension Assertion {
@@ -67,6 +31,7 @@ extension Assertion {
     /// A matcher that succeeds when testable obserevr never recieves an event.
     ///
     /// This is to macth a similar behavior of `Observabel.never()`
+    @available(*, deprecated)
     public func never() {
         verify(pass: events.isEmpty,
                message: "never emits, got <\(events.count)> event(s)")
@@ -75,6 +40,7 @@ extension Assertion {
     /// A matcher that succeeds when testable obserevr only recieves a `completed` event.
     ///
     /// This is to macth a similar behavior of `Observabel.empty()`
+    @available(*, deprecated)
     public func empty() {
         verify(pass: events.first?.value.isCompleted ?? false,
                message: "complete with no other events")
@@ -111,6 +77,7 @@ extension Assertion {
     /// A matcher that succeeds when first emitted next matches a given value.
     ///
     ///   - matcher: A closure to evaluate if actual value matches.
+    @available(*, deprecated)
     public func firstNext(match matcher: (T?) -> (Bool, String)) {
         next(at: 0, match: matcher)
     }
@@ -145,6 +112,7 @@ extension Assertion where T: Equatable {
     /// A matcher that succeeds when first emitted next is equal to given value.
     ///
     /// - Parameter expectedValue: Expected value.
+    @available(*, deprecated)
     public func firstNext(equal expectedValue: T) {
         next(at: 0, equal: expectedValue)
     }
@@ -152,6 +120,7 @@ extension Assertion where T: Equatable {
     /// A matcher that succeeds when testable obserevr only recieves a `next` event and immediately completes.
     ///
     /// This is to macth a similar behavior of `Observabel.just()`
+    @available(*, deprecated)
     public func just(_ value: T) {
         let msg = "get <\(value)> then completes"
         guard events.count == 2 else {

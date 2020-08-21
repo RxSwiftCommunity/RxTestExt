@@ -1,5 +1,4 @@
 # RxTestExt
-[![CircleCI](https://circleci.com/gh/RxSwiftCommunity/RxTestExt.png)](https://circleci.com/gh/RxSwiftCommunity/RxTestExt/tree/master)
 ![pod](https://img.shields.io/cocoapods/v/RxTestExt.svg)
 
 A collection of operators &amp; tools not found in the core RxTest distribution.
@@ -17,8 +16,8 @@ func testSomething() {
    scheduler.bind([next(10, "alpha"), completed(10)],
                   to: someObserver)
    scheduler.start()
-   assert(source).next()
-   assert(source).not.error()
+   then(source).should.next(at: 10)
+   then(source).shouldNot.error()
 }
 ```
 
@@ -26,7 +25,13 @@ func testSomething() {
 - Scheduler subscription extensions
    - record observable events into a `TestableObserver`.
    - bind recorded events to an Observer or a Relay.
-- Rx Timeline matchers functions
+- Rx Timeline expectations
+   - assert `TestableObserver` recorded some specific next events.
+   - assert `TestableObserver` received some specific complete event.
+   - assert `TestableObserver` received some specific error event.
+   - assert `TestableObserver` recorded events matching a timeline from one of Rx operators
+   
+- Rx Timeline matchers functions [DEPRECATED]
    - assert `TestableObserver` recorded `next` events.
    - assert `TestableObserver` received `error` events.
    - assert `TestableObserver` received `complete` events.
