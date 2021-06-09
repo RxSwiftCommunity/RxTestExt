@@ -20,13 +20,13 @@ Pod::Spec.new do |s|
         'RxTestExt/Core/*.{swift}',
         'RxTestExt/Assertion/*.{swift}',
     ]
-    ss.dependency 'RxTest', '~> 5.0'
+    ss.dependency 'RxTest', '~> 6.0'
   end
 
   s.subspec "Relays" do |ss|
     ss.source_files = "RxTestExt/Relays/*.{swift}"
     ss.dependency "RxTestExt/Core"
-    ss.dependency 'RxRelay', '~> 5.0'
+    ss.dependency 'RxRelay', '~> 6.0'
   end
 
   s.frameworks = 'XCTest'
