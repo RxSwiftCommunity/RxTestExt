@@ -1,24 +1,24 @@
 PODS:
-  - RxCocoa (5.0.1):
-    - RxRelay (~> 5)
-    - RxSwift (~> 5)
-  - RxRelay (5.0.1):
-    - RxSwift (~> 5)
-  - RxSwift (5.0.1)
-  - RxTest (5.0.1):
-    - RxSwift (~> 5)
-  - RxTestExt (0.3.4):
-    - RxTestExt/Core (= 0.3.4)
-    - RxTestExt/Relays (= 0.3.4)
-  - RxTestExt/Core (0.3.4):
-    - RxTest (~> 5.0)
-  - RxTestExt/Relays (0.3.4):
-    - RxRelay (~> 5.0)
+  - RxCocoa (6.2.0):
+    - RxRelay (= 6.2.0)
+    - RxSwift (= 6.2.0)
+  - RxRelay (6.2.0):
+    - RxSwift (= 6.2.0)
+  - RxSwift (6.2.0)
+  - RxTest (6.2.0):
+    - RxSwift (= 6.2.0)
+  - RxTestExt (0.5.0):
+    - RxTestExt/Core (= 0.5.0)
+    - RxTestExt/Relays (= 0.5.0)
+  - RxTestExt/Core (0.5.0):
+    - RxTest (~> 6.0)
+  - RxTestExt/Relays (0.5.0):
+    - RxRelay (~> 6.0)
     - RxTestExt/Core
 
 DEPENDENCIES:
-  - RxCocoa (~> 5.0)
-  - RxSwift (~> 5.0)
+  - RxCocoa (~> 6.0)
+  - RxSwift (~> 6.0)
   - RxTestExt (from `../`)
 
 SPEC REPOS:
@@ -33,12 +33,12 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  RxCocoa: e741b9749968e8a143e2b787f1dfbff2b63d0a5c
-  RxRelay: 89d54507f4fd4d969e6ec1d4bd7f3673640b4640
-  RxSwift: e2dc62b366a3adf6a0be44ba9f405efd4c94e0c4
-  RxTest: 0132f952a61da82d5233abedaa559df91e5330e5
-  RxTestExt: e560779e02b5bb90e9f51c88be075c885369dbaa
+  RxCocoa: 4baf94bb35f2c0ab31bc0cb9f1900155f646ba42
+  RxRelay: e72dbfd157807478401ef1982e1c61c945c94b2f
+  RxSwift: d356ab7bee873611322f134c5f9ef379fa183d8f
+  RxTest: 0c692fa672b694373ba86d2b00033595297a2831
+  RxTestExt: cf51512b60143cdcabbbf4cee641b3d588a79999
 
-PODFILE CHECKSUM: 4cd93641e44324b789b544db2a90bbfa1cbcd9de
+PODFILE CHECKSUM: 7ee0c3f4a1a0e5289ba02910613fcf3d0c0523b2
 
-COCOAPODS: 1.8.4
+COCOAPODS: 1.10.1
