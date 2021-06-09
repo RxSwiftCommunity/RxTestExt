@@ -29,9 +29,9 @@ class ExampleTests: XCTestCase {
         viewModel = ViewModel()
         scheduler = TestScheduler(initialClock: 0)
     }
-
+    typealias Events = [Recorded<Event<String>>]
     func testRecordingAllEvents() {
-        let events = [next(10, "alpha"), completed(10)]
+        let events: Events = [.next(10, "alpha"), .completed(10)]
         let source = scheduler.record(source: viewModel.elements)
         scheduler.bind(events, to: viewModel.input)
         scheduler.start()
@@ -39,7 +39,7 @@ class ExampleTests: XCTestCase {
     }
 
     func testRecordingAllEventsPublishRelay() {
-        let events = [next(10, "alpha")]
+        let events: Events = [.next(10, "alpha")]
         let source = scheduler.record(source: viewModel.publishRelayElements)
         scheduler.bind(events, to: viewModel.publishRelayInput)
         scheduler.start()
@@ -47,16 +47,16 @@ class ExampleTests: XCTestCase {
     }
 
     func testRecordingAllEventsBehaviorRelay() {
-        let events = [next(10, "alpha")]
+        let events: Events = [.next(10, "alpha")]
 
         let source = scheduler.record(source: viewModel.behaviorRelayElements)
         scheduler.bind(events, to: viewModel.behaviorRelayInput)
         scheduler.start()
-        XCTAssertEqual(source.events, [next(0, "start")] + events)
+        XCTAssertEqual(source.events, [.next(0, "start")] + events)
     }
 
     func testSentNextEvent() {
-        let events = [next(10, "alpha"), completed(10)]
+        let events: Events = [.next(10, "alpha"), .completed(10)]
         let source = scheduler.record(source: viewModel.elements)
         scheduler.bind(events, to: viewModel.input)
         scheduler.start()
@@ -68,7 +68,7 @@ class ExampleTests: XCTestCase {
     }
 
     func testSentNextEventPublishRelay() {
-        let events = [next(10, "alpha")]
+        let events: Events = [.next(10, "alpha")]
         let source = scheduler.record(source: viewModel.publishRelayElements)
         scheduler.bind(events, to: viewModel.publishRelayInput)
         scheduler.start()
@@ -80,7 +80,7 @@ class ExampleTests: XCTestCase {
     }
 
     func testSentNextEventBehaviorRelay() {
-        let events = [next(10, "alpha")]
+        let events: Events = [.next(10, "alpha")]
         let source = scheduler.record(source: viewModel.behaviorRelayElements)
         scheduler.bind(events, to: viewModel.behaviorRelayInput)
         scheduler.start()
@@ -93,7 +93,7 @@ class ExampleTests: XCTestCase {
     }
 
     func testNextEventsHelpers() {
-        let events = [next(10, "alpha"), next(12, "bravo"), completed(15)]
+        let events: Events = [.next(10, "alpha"), .next(12, "bravo"), .completed(15)]
         let source = scheduler.record(source: viewModel.elements)
         scheduler.bind(events, to: viewModel.input)
         scheduler.start()
@@ -103,7 +103,7 @@ class ExampleTests: XCTestCase {
     }
 
     func testNextEventsHelpersPublishRelay() {
-        let events = [next(10, "alpha"), next(12, "bravo")]
+        let events: Events = [.next(10, "alpha"), .next(12, "bravo")]
         let source = scheduler.record(source: viewModel.publishRelayElements)
         scheduler.bind(events, to: viewModel.publishRelayInput)
         scheduler.start()
@@ -113,7 +113,7 @@ class ExampleTests: XCTestCase {
     }
 
     func testNextEventsHelpersBehaviorRelay() {
-        let events = [next(10, "alpha"), next(12, "bravo")]
+        let events: Events = [.next(10, "alpha"), .next(12, "bravo")]
         let source = scheduler.record(source: viewModel.behaviorRelayElements)
         scheduler.bind(events, to: viewModel.behaviorRelayInput)
         scheduler.start()
@@ -123,7 +123,7 @@ class ExampleTests: XCTestCase {
     }
 
     func testNotSentNext() {
-        let events: [Recorded<Event<String>>] = [completed(10)]
+        let events: Events = [.completed(10)]
         let source = scheduler.record(source: viewModel.elements)
         scheduler.bind(events, to: viewModel.input)
         scheduler.start()
@@ -131,7 +131,7 @@ class ExampleTests: XCTestCase {
     }
 
     func testNotSentNextPublishRelay() {
-        let events: [Recorded<Event<String>>] = [completed(10)]
+        let events: Events = [.completed(10)]
         let source = scheduler.record(source: viewModel.publishRelayElements)
         scheduler.bind(events, to: viewModel.publishRelayInput)
         scheduler.start()
@@ -139,7 +139,7 @@ class ExampleTests: XCTestCase {
     }
 
     func testErrorEvent() {
-        let events = [next(10, "alpha"), error(20, TestError())]
+        let events: Events = [.next(10, "alpha"), .error(20, TestError())]
         let source = scheduler.record(source: viewModel.elements)
         scheduler.bind(events, to: viewModel.input)
         scheduler.start()
@@ -151,7 +151,7 @@ class ExampleTests: XCTestCase {
     }
 
     func testNotErrorEvent() {
-        let events = [next(10, "alpha"), completed(10)]
+        let events: Events = [.next(10, "alpha"), .completed(10)]
         let source = scheduler.record(source: viewModel.elements)
         scheduler.bind(events, to: viewModel.input)
         scheduler.start()
@@ -159,7 +159,7 @@ class ExampleTests: XCTestCase {
     }
 
     func testNotErrorEventPublishRelay() {
-        let events = [next(10, "alpha")]
+        let events: Events = [.next(10, "alpha")]
         let source = scheduler.record(source: viewModel.publishRelayElements)
         scheduler.bind(events, to: viewModel.publishRelayInput)
         scheduler.start()
@@ -167,7 +167,7 @@ class ExampleTests: XCTestCase {
     }
 
     func testNotErrorEventBehaviorRelay() {
-        let events = [next(10, "alpha")]
+        let events: Events = [.next(10, "alpha")]
         let source = scheduler.record(source: viewModel.behaviorRelayElements)
         scheduler.bind(events, to: viewModel.behaviorRelayInput)
         scheduler.start()
@@ -175,7 +175,7 @@ class ExampleTests: XCTestCase {
     }
 
     func testComplete() {
-        let events = [next(10, "alpha"), completed(10)]
+        let events: Events = [.next(10, "alpha"), .completed(10)]
         let source = scheduler.record(source: viewModel.elements)
         scheduler.bind(events, to: viewModel.input)
         scheduler.start()
@@ -185,7 +185,7 @@ class ExampleTests: XCTestCase {
     }
 
     func testNotComplete() {
-        let events = [next(10, "alpha")]
+        let events: Events = [.next(10, "alpha")]
         let source = scheduler.record(source: viewModel.elements)
         scheduler.bind(events, to: viewModel.input)
         scheduler.start()
@@ -193,7 +193,7 @@ class ExampleTests: XCTestCase {
     }
 
     func testNotCompletePublishRelay() {
-        let events = [next(10, "alpha")]
+        let events: Events = [.next(10, "alpha")]
         let source = scheduler.record(source: viewModel.publishRelayElements)
         scheduler.bind(events, to: viewModel.publishRelayInput)
         scheduler.start()
@@ -201,7 +201,7 @@ class ExampleTests: XCTestCase {
     }
 
     func testNotCompleteBehaviorRelay() {
-        let events = [next(10, "alpha")]
+        let events: Events = [.next(10, "alpha")]
         let source = scheduler.record(source: viewModel.behaviorRelayElements)
         scheduler.bind(events, to: viewModel.behaviorRelayInput)
         scheduler.start()
@@ -224,21 +224,21 @@ class ExampleTests: XCTestCase {
 
     func testEmpty() {
         let source = scheduler.record(source: viewModel.elements)
-        scheduler.bind([completed(10)], to: viewModel.input)
+        scheduler.bind([.completed(10)], to: viewModel.input)
         scheduler.start()
         assert(source).empty()
     }
 
     func testJust() {
         let source = scheduler.record(source: viewModel.elements)
-        scheduler.bind([next(10, "alpha"), completed(10)], to: viewModel.input)
+        scheduler.bind([.next(10, "alpha"), .completed(10)], to: viewModel.input)
         scheduler.start()
         assert(source).just("alpha")
     }
 
     func testMatchFirstNext() {
         let source = scheduler.record(source: viewModel.elements)
-        scheduler.bind([next(10, "alpha"), completed(10)], to: viewModel.input)
+        scheduler.bind([.next(10, "alpha"), .completed(10)], to: viewModel.input)
         scheduler.start()
         assert(source).firstNext {
             (!($0?.isEmpty ?? false), "be empty")
@@ -247,7 +247,7 @@ class ExampleTests: XCTestCase {
 
     func testMatchFirstNextPublishRelay() {
         let source = scheduler.record(source: viewModel.publishRelayElements)
-        scheduler.bind([next(10, "alpha"), completed(10)], to: viewModel.publishRelayInput)
+        scheduler.bind([.next(10, "alpha"), .completed(10)], to: viewModel.publishRelayInput)
         scheduler.start()
         assert(source).firstNext {
             (!($0?.isEmpty ?? false), "be empty")
@@ -256,7 +256,7 @@ class ExampleTests: XCTestCase {
 
     func testMatchFirstNextBehaviorRelay() {
         let source = scheduler.record(source: viewModel.behaviorRelayElements)
-        scheduler.bind([next(10, "alpha"), completed(10)], to: viewModel.behaviorRelayInput)
+        scheduler.bind([.next(10, "alpha"), .completed(10)], to: viewModel.behaviorRelayInput)
         scheduler.start()
         assert(source).firstNext {
             (!($0?.isEmpty ?? false), "be empty")
